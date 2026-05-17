@@ -13,4 +13,6 @@ Initial release.
 - Bridge connector shapes: rectangle, circle, hexagon, triangle, blob;
   configurable width, count (spread evenly around large islands) and overlap.
 - Cross-platform installer (`install.py`) for Windows, macOS and Linux.
-- CI on Ubuntu/macOS/Windows across Python 3.9–3.12.
+- Deterministic demo/regression fixture in `examples/known-islands.svg`.
+- CI on Ubuntu/macOS/Windows across Python 3.9–3.12; test suite verified
+  green against inkex 1.4.1 + numpy 2.x (the modern Inkscape line).
