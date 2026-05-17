@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <name>Find Islands (Stencil Bridges)</name>
+  <id>io.github.charleswest775.stencilislands</id>
+
+  <param name="scope" type="optiongroup" appearance="combo" gui-text="Scope:">
+    <option value="all">Whole document</option>
+    <option value="selection">Current selection only</option>
+  </param>
+
+  <param name="main_body" type="optiongroup" appearance="combo"
+         gui-text="Keep as the main piece:">
+    <option value="largest">Largest connected piece</option>
+    <option value="selection">Piece containing the selection</option>
+  </param>
+
+  <param name="min_area" type="float" precision="1" min="0" max="100000"
+         appearance="full"
+         gui-text="Ignore islands at or below this area (px²):">1.0</param>
+
+  <param name="include_counters" type="bool"
+         gui-text="Also flag bare counters (e.g. an O drawn as two circles)">false</param>
+
+  <param name="mode" type="optiongroup" appearance="combo" gui-text="Action:">
+    <option value="report">Report / highlight (non-destructive)</option>
+    <option value="bridge">Bridge islands (add connectors)</option>
+    <option value="delete">Delete islands</option>
+  </param>
+
+  <param name="bridge_shape" type="optiongroup" appearance="combo"
+         gui-text="Bridge shape:">
+    <option value="rectangle">Rectangle (straight tie)</option>
+    <option value="circle">Circle (lozenge)</option>
+    <option value="hexagon">Hexagon</option>
+    <option value="triangle">Triangle (pinched / bow tie)</option>
+    <option value="blob">Blob (rounded capsule)</option>
+  </param>
+
+  <param name="bridge_width" type="float" precision="2" min="0.01" max="1000"
+         gui-text="Bridge width (px):">1.50</param>
+
+  <param name="bridge_count" type="int" min="1" max="50"
+         gui-text="Bridges per island:">1</param>
+
+  <param name="bridge_overlap" type="float" precision="2" min="0" max="1000"
+         gui-text="Bridge overlap each side (px, 0 = auto):">0.00</param>
+
+  <param name="bridge_color" type="string"
+         gui-text="Bridge fill (CSS hex, or 'match' for source fill):">#19a974</param>
+
+  <param name="highlight_color" type="string"
+         gui-text="Highlight color (CSS hex):">#ff00ff</param>
+
+  <param name="curve_tolerance" type="float" precision="2" min="0.01" max="10"
+         gui-text="Curve flattening tolerance (px):">0.25</param>
+
+  <param name="info" type="description" xml:space="preserve">Workflow: keep "Live preview" ticked and start with Action = Report to see every island highlighted on the canvas. Switch to Bridge (pick a shape and width) or Delete, then click Apply. After Bridge, select the design plus the new "stencil-islands (bridges)" group and run Path &gt; Union so the ties become one continuous cut path. Bare counters can only be Deleted, not bridged.</param>
+
+  <effect needs-live-preview="true">
+    <object-type>all</object-type>
+    <effects-menu>
+      <submenu name="Stencil"/>
+    </effects-menu>
+    <menu-tip>Find parts that would drop out of a laser-cut stencil, then delete or bridge them.</menu-tip>
+  </effect>
+
+  <script>
+    <command location="inx" interpreter="python">stencil_islands.py</command>
+  </script>
+</inkscape-extension>
