@@ -54,7 +54,12 @@
   <param name="curve_tolerance" type="float" precision="2" min="0.01" max="10"
          gui-text="Curve flattening tolerance (px):">0.25</param>
 
-  <param name="info" type="description" xml:space="preserve">Workflow: keep "Live preview" ticked and start with Action = Report to see every island highlighted on the canvas. Switch to Bridge (pick a shape and width) or Delete, then click Apply. After Bridge, select the design plus the new "stencil-islands (bridges)" group and run Path &gt; Union so the ties become one continuous cut path. Bare counters can only be Deleted, not bridged.</param>
+  <param name="show_summary" type="bool"
+         gui-text="Show summary message (pops an Inkscape dialog each run)">false</param>
+
+  <param name="info" type="description" xml:space="preserve">Workflow: keep "Live preview" ticked and start with Action = Report to see every island highlighted on the canvas. Switch to Bridge (pick a shape and width) or Delete, then click Apply. After Bridge, select the design plus the new "stencil-islands (bridges)" group and run Path &gt; Union so the ties become one continuous cut path. Bare counters can only be Deleted, not bridged.
+
+Leave "Show summary message" off (default) for a quiet workflow: Inkscape pops a modal "received additional data from the script" dialog whenever an extension prints, which is once per live-preview change. Turn it on only if you want the island count reported.</param>
 
   <effect needs-live-preview="true">
     <object-type>all</object-type>

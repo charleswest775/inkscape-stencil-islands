@@ -73,6 +73,11 @@ class StencilIslands(inkex.EffectExtension):
         pars.add_argument("--bridge_color", default="#19a974")
         pars.add_argument("--highlight_color", default="#ff00ff")
         pars.add_argument("--curve_tolerance", type=float, default=0.25)
+        # Off by default: writing to stderr makes Inkscape pop the "received
+        # additional data from the script" dialog on every live-preview run.
+        pars.add_argument(
+            "--show_summary", type=inkex.Boolean, default=False
+        )
 
     # --- collection ---------------------------------------------------------
 
@@ -135,7 +140,7 @@ class StencilIslands(inkex.EffectExtension):
         )
 
         if not islands:
-            self.msg("Stencil Islands: " + summarize(islands))
+            self._summary(summarize(islands))
             return
 
         mode = self.options.mode
@@ -146,7 +151,18 @@ class StencilIslands(inkex.EffectExtension):
         else:
             note = self._do_report(islands, rings)
 
-        self.msg("Stencil Islands: " + summarize(islands) + " " + note)
+        self._summary(summarize(islands) + " " + note)
+
+    def _summary(self, text):
+        """Emit the status line only when the user opted in.
+
+        inkex's ``msg`` writes to stderr, and Inkscape shows any stderr from
+        an effect in a modal "received additional data" dialog - which fires
+        on every live-preview re-run. Keeping this off by default makes the
+        normal/preview path completely silent.
+        """
+        if self.options.show_summary:
+            self.msg("Stencil Islands: " + text)
 
     # --- actions ------------------------------------------------------------
 
